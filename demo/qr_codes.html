@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Demo QR Codes</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  :root { --ink: #13243a; --muted: #46586b; --line: #c4d0da; --bad: #a8231b; --good: #1a6e39; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 24px 16px; font: 16px/1.5 system-ui, sans-serif; color: var(--ink); background: #fff; }
+  h1 { margin: 0 0 4px; font-size: 24px; }
+  p.lead { margin: 0 0 24px; color: var(--muted); max-width: 70ch; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .card { border: 2px solid var(--line); border-radius: 14px; padding: 16px; break-inside: avoid; }
+  .card h2 { margin: 0 0 2px; font-size: 18px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 999px; color: #fff; }
+  .tag.good { background: var(--good); } .tag.bad { background: var(--bad); }
+  .qr { margin: 14px auto; width: 200px; height: 200px; }
+  .qr img, .qr canvas { width: 200px !important; height: 200px !important; }
+  .expect { font-size: 14px; color: var(--muted); }
+  code { font-size: 11px; word-break: break-all; color: var(--muted); }
+  @media print { body { padding: 0; } .card { border-color: #999; } }
+</style>
+</head>
+<body>
+<h1>Easy Pay, Safe Pay: demo QR codes</h1>
+<p class="lead">Print this page, or show it on a laptop, and scan each code with the app's "Scan a QR code to pay". Everything stays in practice mode, so no money moves. Do not scan these with a normal camera app.</p>
+<div class="grid" id="grid"></div>
+<script>
+  const codes = [
+    { name: "Raju's real shop QR", good: true,
+      data: "upi://pay?pa=raju.kirana@okaxis&pn=Raju%20Kirana%20Store&mc=5411",
+      expect: "Known payee. Goes straight to the amount. Green." },
+    { name: "Swapped sticker: lookalike ID", good: false,
+      data: "upi://pay?pa=raju.klrana@okaxis&pn=Raju%20Kirana%20Store&mc=5411",
+      expect: "Same shop name, one letter different (i to l). Warning on the name screen, red after the check." },
+    { name: "\"Scan to receive cashback\"", good: false,
+      data: "upi://pay?pa=cashback.offer7@ybl&pn=PhonePe%20Cashback%20Desk&am=4999&tn=Scan%20to%20RECEIVE%20Rs%204999%20cashback",
+      expect: "Promises money for scanning. Red, even if every question is answered No." },
+    { name: "Fake QR sticker: website", good: false,
+      // .example is a reserved domain, so this can never open a real site even from a normal camera app
+      data: "http://sbi-kyc-update.example/verify?ref=8812",
+      expect: "Blocked screen: 'This QR code opens a website, not a payment'. The link is never opened." },
+    { name: "AutoPay mandate trap", good: false,
+      data: "upi://mandate?pa=primevideo.offer@ybl&pn=Prime%20Video%20Offer&am=999&mam=999&recur=MONTHLY&tn=Free%20trial",
+      expect: "Blocked screen: 'This QR code sets up AutoPay'." },
+    { name: "Malformed amount", good: false,
+      data: "upi://pay?pa=shop.xyz@ybl&pn=Shop&am=1e9&cu=USD",
+      expect: "Rejected: 'This is not a UPI payment QR code'. Strict input validation." },
+  ];
+  const grid = document.getElementById("grid");
+  for (const c of codes) {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<span class="tag ${c.good ? "good" : "bad"}">${c.good ? "Genuine" : "Attack"}</span>
+      <h2></h2><div class="qr"></div><div class="expect"></div><code></code>`;
+    card.querySelector("h2").textContent = c.name;
+    card.querySelector(".expect").textContent = "Expect: " + c.expect;
+    card.querySelector("code").textContent = c.data;
+    grid.appendChild(card);
+    try {
+      new QRCode(card.querySelector(".qr"), { text: c.data, width: 400, height: 400, correctLevel: QRCode.CorrectLevel.M });
+    } catch (e) {
+      card.querySelector(".qr").textContent = "QR library did not load. Paste the text below into any QR generator.";
+    }
+  }
+</script>
+</body>
+</html>

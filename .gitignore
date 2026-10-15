@@ -1,0 +1,18 @@
+# Built apps are published as GitHub Release downloads, not committed
+*.apk
+*.aab
+
+# macOS / editor
+.DS_Store
+.claude/
+
+# Original Android (WebView) app: build output and machine-specific paths
+android/.gradle/
+android/build/
+android/app/build/
+local.properties
+
+# Signing keys never go in the repo
+*.jks
+*.keystore
+key.properties

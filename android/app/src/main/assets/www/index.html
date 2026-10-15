@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Easy Pay Safe Pay</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">
+      <h1 id="appname">Easy Pay, <span>Safe Pay</span></h1>
+      <div class="tools">
+        <button class="chip" id="voiceBtn" data-act="voice" aria-pressed="false">Voice off</button>
+      </div>
+    </div>
+    <div class="tools" role="group" aria-label="Language">
+      <button class="chip" data-act="lang" data-v="en" id="lang-en">English</button>
+      <button class="chip" data-act="lang" data-v="hi" id="lang-hi">हिंदी</button>
+      <button class="chip" data-act="lang" data-v="kn" id="lang-kn">ಕನ್ನಡ</button>
+    </div>
+    <div class="banner" id="banner"></div>
+  </header>
+  <main id="screen" aria-live="polite"></main>
+</div>
+<script src="engine.js"></script>
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
