@@ -2,7 +2,14 @@
 
 An Android app that walks an older adult through a UPI payment one step at a time, and runs a scam check before any money moves. Built for Hackurity 2026, Track C, Problem Statement 8.
 
-**Install:** copy `EasyPaySafePay.apk` to an Android 8+ phone and tap it (allow "Install unknown apps" when asked).
+**Install:** download `EasyPaySafePay-v3.apk` from the [latest release](https://github.com/Hotsberg/easy-pay-safe-pay/releases/latest), copy it to an Android 8+ phone and tap it (allow "Install unknown apps" when asked).
+
+The current app (v3, Android and iOS) is the Flutter project in [`easypay_flutter/`](easypay_flutter/README.md). This page describes the original Android WebView version (v1) in `android/`.
+
+## Team
+
+- Adrian ([@Hotsberg](https://github.com/Hotsberg))
+- Pushkar Sharma
 
 ## What it does
 
