@@ -10,6 +10,7 @@ The current app (v3, Android and iOS) is the Flutter project in [`easypay_flutte
 
 - Adrian ([@Hotsberg](https://github.com/Hotsberg))
 - Pushkar Sharma
+- Sedrah Maryam
 
 ## What it does
 
